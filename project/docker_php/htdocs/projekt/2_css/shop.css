@@ -1,0 +1,102 @@
+/* SHOP HEADER */
+.shop-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 1rem 3%;
+    background: #eee;
+}
+
+.shop-header h1 {
+    font-size: 2.5rem;
+}
+
+/* SUCHLEISTE + FILTER */
+.shop-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid black;
+}
+
+.search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0.3rem;
+}
+
+.search img {
+    height: 20px;
+}
+
+/* BUTTONS */
+.filter-btn,
+.category-btn button {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 2px solid var(--basicBlue);
+    background: transparent;
+    cursor: pointer;
+}
+
+/* SHOP BACKGROUND */
+.shop {
+    flex: 1;
+    padding: 2rem;
+    background: url("../images/backgrounds/skatewall1.png") center/cover no-repeat;
+}
+
+/* GRID */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+}
+
+/* CARD */
+.product-card {
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+/* BILD */
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    background: var(--grey);
+}
+
+/* INFO */
+.product-info {
+    padding: 0.8rem;
+    background: #ddd;
+}
+
+.product-info h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.product-info p {
+    margin: 0.2rem 0;
+    font-size: 0.8rem;
+}
+
+.product-info span {
+    font-weight: bold;
+}

@@ -2,3 +2,75 @@
     --grey: #D9D9D9;
     --basicBlue: #8DD5F1;
 }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: var(--basicBlue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 2%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 10;
+}
+
+.navlink {
+    text-decoration: none;
+    color:black;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.logo img {
+    height: 3vw;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    margin-left: 1.5vw;
+    font-size: 1rem;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    font-size: 1rem;
+}
+
+.icon img {
+    height: 2vw;
+    cursor: pointer;
+}
+
+.profile img {
+    height: 3vw;
+    border-radius: 50%;
+}

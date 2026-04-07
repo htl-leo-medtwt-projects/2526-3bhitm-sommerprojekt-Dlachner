@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="nav-links">
-                    <a href="#">Zum Shop</a>
+                    <a href="1_php/shop.php">Zum Shop</a>
                     <a href="#">Zum Konfigurator</a>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 </div></a>
 
                 <div class="profile">
-                    <img src="images/profilpic.png" alt="Profil">
+                    <a href="#"><img src="images/profilpic.png" alt="Profil"></a>
                 </div>
             </div>
         </div>
