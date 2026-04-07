@@ -11,7 +11,7 @@
     <div class="navbar">
         <div class="left">
             <div class="logo">
-            <img src="images/logo.png" alt="Logo">
+                <img src="images/logo.png" alt="Logo">
             </div>
 
             <div class="nav-links">
@@ -50,7 +50,6 @@
         <h2>Kategorien</h2>
 
         <div class="category-grid">
-
             <div class="card large">
                 <h3>Decks</h3>
                 <img src="images/categoryParts/deck.png" alt="Deck">
