@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Startseite</title>
     <link rel="stylesheet" href="2_css/mainStyle.css">
+    <link rel="stylesheet" href="2_css/mainpageStyle.css">
 </head>
 <body>
     <?php
@@ -13,7 +14,7 @@
         <div class="navbar">
             <div class="left">
                 <div class="logo">
-                    <img src="images/logo.png" alt="Logo">
+                    <a href="#"><img src="images/logo.png" alt="Logo"></a>
                 </div>
 
                 <div class="nav-links">
@@ -23,15 +24,15 @@
             </div>
 
             <div class="right">
-                <div class="icon">
+                <a href="#" class="navlink"><div class="icon">
                     <img src="images/wishlist.png" alt="Herz">
                     <span>Wunschliste</span>
-                </div>
+                </div></a>
 
-                <div class="icon">
+                <a href="#" class="navlink"><div class="icon">
                     <img src="images/warenkorb.png" alt="Warenkorb">
                     <span>Warenkorb</span>
-                </div>
+                </div></a>
 
                 <div class="profile">
                     <img src="images/profilpic.png" alt="Profil">
