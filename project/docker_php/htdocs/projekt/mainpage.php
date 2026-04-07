@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="2_css/mainStyle.css">
 </head>
 <body>
-    
+    <!-- Navbar -->
+     
 </body>
 </html>
