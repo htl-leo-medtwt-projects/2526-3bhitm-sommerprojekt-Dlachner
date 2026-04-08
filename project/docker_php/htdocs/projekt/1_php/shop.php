@@ -1,3 +1,7 @@
+<?php
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +13,12 @@
 </head>
 <body>
     <!-- Navbar -->
+        <?php
+        echo '
         <div class="navbar">
             <div class="left">
                 <div class="logo">
-                    <a href="../mainpage.php"><img src="../images/logo.png" alt="Logo"></a>
+                    <a href="#"><img src="../images/logo.png" alt="Logo"></a>
                 </div>
 
                 <div class="nav-links">
@@ -20,25 +26,44 @@
                     <a href="#">Zum Konfigurator</a>
                 </div>
             </div>
-
+            
             <div class="right">
-                <a href="#" class="navlink"><div class="icon">
-                    <img src="../images/wishlist.png" alt="Herz">
-                    <span>Wunschliste</span>
-                </div></a>
-
-                <a href="#" class="navlink"><div class="icon">
-                    <img src="../images/warenkorb.png" alt="Warenkorb">
-                    <span>Warenkorb</span>
-                </div></a>
+                <a href="#" class="navlink">
+                    <div class="icon">
+                        <img src="../images/wishlist.png" alt="Herz">
+                        <span>Wunschliste</span>
+                    </div>
+                </a>
+                <a href="#" class="navlink">
+                    <div class="icon">
+                        <img src="../images/warenkorb.png" alt="Warenkorb">
+                        <span>Warenkorb</span>
+                    </div>
+                </a>
 
                 <div class="profile">
-                    <a href="#"><img src="../images/profilpic.png" alt="Profil"></a>
+                    <a href="#" class="profile-trigger" id="profileTrigger">
+                        <img src="../images/profilpic.png" alt="Profil">
+                    </a>
+                    
+                    <!-- Dropdown Menü (Von Grok AI) -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        ' . ($isLoggedIn ? '
+                        <a href="#">Meine Bestellungen</a>
+                        <a href="#">Einstellungen</a>
+                        <a href="#">Wunschliste</a>
+                        <a href="#" class="logout">Abmelden</a>
+                        ' : '
+                        <a href="login.php?login">Anmelden</a>
+                        <a href="login.php?register">Registrieren</a>
+                        ') . '
+                    </div>
+                    <!-- AI Code Ende -->
                 </div>
             </div>
-        </div>
+        </div>'
+        ?>
         <!-- -->
-
 
     <!-- SHOP mithilfe von Ki erstellt, beginnend hier -->
     <!-- SHOP HEADER -->
@@ -90,5 +115,24 @@
         </div>
     </section>
     <!-- ---------- Ki Code endet hier ---------- -->
+
+    <!-- JavaScript für das Dropdown (Code von Grok AI -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const trigger = document.getElementById("profileTrigger");
+            const dropdown = document.getElementById("profileDropdown");
+
+            trigger.addEventListener("click", function(e) {
+                e.preventDefault();
+                dropdown.classList.toggle("show");
+            });
+
+            document.addEventListener("click", function(e) {
+                if (!trigger.contains(e.target)) {
+                    dropdown.classList.remove("show");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

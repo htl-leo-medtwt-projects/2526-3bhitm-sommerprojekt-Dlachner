@@ -55,8 +55,8 @@ session_start();
                         <a href="#">Wunschliste</a>
                         <a href="#" class="logout">Abmelden</a>
                         ' : '
-                        <a href="login.php">Anmelden</a>
-                        <a href="register.php">Registrieren</a>
+                        <a href="1_php/login.php?login">Anmelden</a>
+                        <a href="1_php/login.php?register">Registrieren</a>
                         ') . '
                     </div>
                     <!-- AI Code Ende -->
