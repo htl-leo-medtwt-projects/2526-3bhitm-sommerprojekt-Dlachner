@@ -18,11 +18,11 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="navbar">
             <div class="left">
                 <div class="logo">
-                    <a href="#"><img src="../images/logo.png" alt="Logo"></a>
+                    <a href="../mainpage.php"><img src="../images/logo.png" alt="Logo"></a>
                 </div>
 
                 <div class="nav-links">
-                    <a href="1_php/shop.php">Zum Shop</a>
+                    <a href="shop.php">Zum Shop</a>
                     <a href="#">Zum Konfigurator</a>
                 </div>
             </div>
