@@ -68,7 +68,7 @@ session_start();
         <section class="hero">
             <div class="hero-content">
                 <h1>Konfiguriere dein<br>Skateboard!</h1>
-                <button>Zum Konfigurator</button>
+                <a href="#" class="hero-button">Zum Konfigurator</a>
             </div>
         </section>
 

@@ -1,6 +1,32 @@
 :root {
     --grey: #D9D9D9;
     --basicBlue: #8DD5F1;
+
+    /* Schriften */
+    --kategorien: Kirang_Haerang;
+    --links: JetBrains_Mono;
+    --header: JejuMyeongjo;
+    --mainHeader: Comfortaa;
+}
+
+@font-face {
+    font-family: JetBrains_Mono;
+    src: url(../fonts/JetBrainsMono-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: Comfortaa;
+    src: url(../fonts/Comfortaa-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: JejuMyeongjo;
+    src: url(../fonts/JejuMyeongjo-Regular.ttf);
+}
+
+@font-face {
+    font-family: Kirang_Haerang;
+    src: url(../fonts/KirangHaerang-Regular.ttf);
 }
 
 body {
@@ -19,6 +45,7 @@ body {
     padding: 0.5rem 2%;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     position: relative;
+    font-family: var(--links);
     z-index: 10;
 }
 
