@@ -51,7 +51,7 @@
                 <img src="../images/search.png" alt="Suche">
             </div>
 
-            <button class="filter-btn">Filter</button>
+            <button class="filter-btn">Filter ▼</button>
             <button class="filter-btn">Marke ▼</button>
         </div>
 

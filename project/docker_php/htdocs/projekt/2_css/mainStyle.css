@@ -45,6 +45,10 @@ body {
     height: 3vw;
 }
 
+.nav-links:hover {
+    cursor: pointer;
+}
+
 .nav-links a {
     text-decoration: none;
     color: black;
@@ -73,4 +77,62 @@ body {
 .profile img {
     height: 3vw;
     border-radius: 50%;
+}
+
+.profile {
+    position: relative;
+}
+
+.profile img {
+    height: 3.2vw;
+    max-height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    min-width: 190px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.25s ease;
+    z-index: 100;
+    margin-top: 10px;
+}
+
+.profile-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-dropdown a {
+    display: block;
+    padding: 13px 18px;
+    color: black;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.profile-dropdown a:hover {
+    background-color: var(--basicBlue);
+    color: white;
+}
+
+.logout {
+    border-top: 1px solid #eee;
+    color: #d32f2f;
+}
+
+.logout:hover {
+    background-color: #d32f2f !important;
+    color: white;
 }
