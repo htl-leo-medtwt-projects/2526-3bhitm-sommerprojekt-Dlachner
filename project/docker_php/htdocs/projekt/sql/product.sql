@@ -25,8 +25,8 @@ CREATE TABLE bearings (
 
 CREATE TABLE deck (
     product_id INT NOT NULL,
-    length INT NOT NULL,
-    width INT NOT NULL,
+    length DECIMAL(4,2) NOT NULL,
+    width DECIMAL(4,2) NOT NULL,
     PRIMARY KEY (product_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
@@ -49,8 +49,8 @@ CREATE TABLE picture (
 
 CREATE TABLE trucks (
     product_id INT NOT NULL,
-    height INT NOT NULL,
-    width INT NOT NULL,
+    height DECIMAL(4,2) NOT NULL,
+    width DECIMAL(4,2) NOT NULL,
     PRIMARY KEY (product_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
