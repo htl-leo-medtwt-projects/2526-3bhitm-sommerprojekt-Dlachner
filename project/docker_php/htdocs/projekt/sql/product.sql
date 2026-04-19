@@ -3,7 +3,6 @@ USE produkt_db;
 
 CREATE TABLE product (
     product_id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
     beschreibung VARCHAR(200) NOT NULL,
     preis DECIMAL(10,2) NOT NULL,
     brand VARCHAR(50) NOT NULL,
