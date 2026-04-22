@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_id = (int) $_POST["product_id"];
     $ismain     = $_POST["ismain"] === "1" ? "1" : "0";
     
-    // Kategorie nur erlaubte Werte akzeptieren (keine freie Eingabe!)
     $erlaubte_kategorien = ["decks", "wheels", "trucks", "bearings", "griptape", "accessories"];
     $kategorie = in_array($_POST["kategorie"], $erlaubte_kategorien) ? $_POST["kategorie"] : null;
 
@@ -15,17 +14,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("❌ Ungültige Kategorie.");
     }
 
-    $zielordner = "images/" . $kategorie . "/";
+    // Ordner zum Speichern (mit ../ weil wir in sql/ sind)
+    $zielordner = "../images/" . $kategorie . "/";
     if (!file_exists($zielordner)) {
-        mkdir($zielordner, 0755, true);  // 0755 statt 0777
+        mkdir($zielordner, 0755, true);
     }
 
-    // Sicherer Dateiname mit uniqid() → kein Überschreiben
     $ext       = strtolower(pathinfo($_FILES["bild"]["name"], PATHINFO_EXTENSION));
     $dateiname = "product_" . $product_id . "_" . uniqid() . "." . $ext;
     $zielpfad  = $zielordner . $dateiname;
 
-    // Validierung mit getimagesize() statt $_FILES["type"]
+    // Sauberer Pfad für die DB (ohne ../)
+    $db_pfad = "images/" . $kategorie . "/" . $dateiname;
+
     $erlaubte_typen = ["image/jpeg", "image/png", "image/webp"];
     $image_info = getimagesize($_FILES["bild"]["tmp_name"]);
 
@@ -33,13 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (move_uploaded_file($_FILES["bild"]["tmp_name"], $zielpfad)) {
 
             $stmt = $conn->prepare("INSERT INTO picture (bildpfad, product_product_id, ismain) VALUES (?, ?, ?)");
-            $stmt->bind_param("sis", $zielpfad, $product_id, $ismain);
+            $stmt->bind_param("sis", $db_pfad, $product_id, $ismain);
 
             if ($stmt->execute()) {
                 header("Location: imgupload.php?erfolg=1");
                 exit();
             } else {
-                // DB-Fehler → Datei wieder löschen
                 unlink($zielpfad);
                 echo "❌ Datenbankfehler: " . $stmt->error;
             }
@@ -56,6 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <body>
     <h2>Bild Upload</h2>
+
+    <?php if (isset($_GET["erfolg"])): ?>
+        <p>✅ Bild erfolgreich hochgeladen!</p>
+    <?php endif; ?>
+
     <form action="" method="post" enctype="multipart/form-data">
         
         <label>Produkt ID:</label>
