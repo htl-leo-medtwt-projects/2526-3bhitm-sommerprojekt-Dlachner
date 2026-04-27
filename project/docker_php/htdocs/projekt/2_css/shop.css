@@ -50,7 +50,12 @@
 .shop {
     flex: 1;
     padding: 2rem;
-    background: url("../images/backgrounds/skatewall1.png") center/cover no-repeat;
+
+    background-image: url("../images/backgrounds/skatewall1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-attachment: fixed;
 }
 
 /* GRID */
@@ -62,7 +67,7 @@
 
 /* CARD */
 .product-card {
-    background: white;
+    background: var(--lightgrey);
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
@@ -84,7 +89,7 @@
 /* INFO */
 .product-info {
     padding: 0.8rem;
-    background: #ddd;
+    background: var(--lightgrey);
 }
 
 .product-info h3 {
