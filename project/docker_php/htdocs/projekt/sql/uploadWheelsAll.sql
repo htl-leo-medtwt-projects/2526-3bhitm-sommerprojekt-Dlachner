@@ -70,9 +70,3 @@ INSERT INTO product (beschreibung, preis, brand, kategorie) VALUES
 INSERT INTO wheels (product_id, width, durchmesser, typ) VALUES
 (LAST_INSERT_ID(), 20, 56, '99A');
 
--- Produkt 35       Bild: welcome2_1, welcome2_2, welcome2_3
-INSERT INTO product (beschreibung, preis, brand, kategorie) VALUES
-('Orbs Specters Swirls 99A 56mm Rollen',34.95, 'Welcome', 'wheels');
-
-INSERT INTO wheels (product_id, width, durchmesser, typ) VALUES
-(LAST_INSERT_ID(), 20, 56, '99A');
