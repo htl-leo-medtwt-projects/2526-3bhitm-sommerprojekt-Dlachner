@@ -72,6 +72,7 @@
     overflow: hidden;
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     transition: 0.2s;
+    cursor:pointer;
 }
 
 .product-card:hover {
@@ -105,10 +106,6 @@
 .product-info span {
     font-weight: bold;
 }
-
-
-
-
 
 .filter-wrapper {
     position: relative;
