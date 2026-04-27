@@ -5,16 +5,27 @@ $isLoggedIn = isset($_SESSION['user_id']);
 // DB-Verbindung
 $conn = new mysqli("db_server", "skate", "1234", "produkt_db");
 
-// Alle Produkte mit ihrem Hauptbild laden
-$result = $conn->query("
+// Kategorie Filter
+$category = $_GET['category'] ?? null;
+
+$sql = "
     SELECT p.product_id, p.beschreibung, p.preis, p.brand, p.kategorie,
            pic.bildpfad
     FROM product p
     LEFT JOIN picture pic 
         ON pic.product_product_id = p.product_id 
         AND pic.ismain = '1'
-    ORDER BY p.product_id DESC
-");
+";
+
+if ($category === 'accessoire') {
+    $sql .= " WHERE p.kategorie IN ('accessoire', 'griptape')";
+} elseif ($category) {
+    $category = $conn->real_escape_string($category);
+    $sql .= " WHERE p.kategorie = '$category'";
+}
+
+$sql .= " ORDER BY p.product_id ASC";
+$result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,8 +94,20 @@ $result = $conn->query("
             <button class="filter-btn">Filter ▼</button>
             <button class="filter-btn">Marke ▼</button>
         </div>
+
+        <!-- Kategorie Dropdown -->
         <div class="category-btn">
-            <button>Kategorie ▼</button>
+            <div class="filter-wrapper">
+                <button class="filter-btn" id="categoryBtn">Kategorie ▼</button>
+                <div class="filter-dropdown" id="categoryDropdown">
+                    <a href="shop.php">Alle</a>
+                    <a href="shop.php?category=deck">Deck</a>
+                    <a href="shop.php?category=trucks">Trucks</a>
+                    <a href="shop.php?category=wheels">Wheels</a>
+                    <a href="shop.php?category=bearings">Bearings</a>
+                    <a href="shop.php?category=accessoire">Accessoire</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -109,6 +132,7 @@ $result = $conn->query("
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Profil Dropdown
             const trigger = document.getElementById("profileTrigger");
             const dropdown = document.getElementById("profileDropdown");
             trigger.addEventListener("click", function(e) {
@@ -118,6 +142,19 @@ $result = $conn->query("
             document.addEventListener("click", function(e) {
                 if (!trigger.contains(e.target)) {
                     dropdown.classList.remove("show");
+                }
+            });
+
+            // Kategorie Dropdown
+            const categoryBtn = document.getElementById("categoryBtn");
+            const categoryDropdown = document.getElementById("categoryDropdown");
+            categoryBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                categoryDropdown.classList.toggle("show");
+            });
+            document.addEventListener("click", function(e) {
+                if (!categoryBtn.contains(e.target)) {
+                    categoryDropdown.classList.remove("show");
                 }
             });
         });
