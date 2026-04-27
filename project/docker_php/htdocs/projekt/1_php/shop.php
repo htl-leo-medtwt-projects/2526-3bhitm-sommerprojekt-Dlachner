@@ -1,3 +1,5 @@
+<!-- Dieser Code wurde mit Unterstützung von ClaudeAI umgesetzt -->
+
 <?php
 session_start();
 $isLoggedIn = isset($_SESSION['user_id']);
