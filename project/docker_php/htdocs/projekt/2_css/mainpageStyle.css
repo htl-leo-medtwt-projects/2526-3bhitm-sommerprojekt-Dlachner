@@ -81,6 +81,8 @@
     transition: transform 0.2s;
     cursor: pointer;
     user-select: none;
+    text-decoration: none;
+    color: inherit;
 }
 
 .card:hover {

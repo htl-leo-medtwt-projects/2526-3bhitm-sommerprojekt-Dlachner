@@ -77,30 +77,30 @@ session_start();
             <h2>Kategorien</h2>
 
             <div class="category-grid">
-                <div class="card large">
+                <a href="1_php/shop.php?category=deck" class="card large">
                     <h3>Decks</h3>
                     <img src="images/categoryParts/deck.png" alt="Deck">
-                </div>
+                </a>
 
-                <div class="card">
+                <a href="1_php/shop.php?category=wheels" class="card">
                     <h3>Rollen</h3>
                     <img src="images/categoryParts/rollen.png" alt="Rollen">
-                </div>
+                </a>
 
-                <div class="card">
+                <a href="1_php/shop.php?category=trucks" class="card">
                     <h3>Achsen</h3>
                     <img src="images/categoryParts/achsen.png" alt="Achsen">
-                </div>
+                </a>
 
-                <div class="card">
+                <a href="1_php/shop.php?category=bearings" class="card">
                     <h3>Kugellager</h3>
                     <img src="images/categoryParts/kugellager.png" alt="Lager">
-                </div>
+                </a>
 
-                <div class="card">
+                <a href="1_php/shop.php?category=accessoire" class="card">
                     <h3>Zubehör</h3>
                     <img src="images/categoryParts/tools.png" alt="Zubehör">
-                </div>
+                </a>
             </div>
         </section>
     ';
