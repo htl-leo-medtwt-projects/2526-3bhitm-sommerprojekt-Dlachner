@@ -40,11 +40,12 @@
     font-size: 1rem;
     cursor: pointer;
     font-family: var(--links);
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .hero-button:hover {
     background: #57a7fc;
+    transform: scale(1.03);
 }
 
 /* KATEGORIEN */
