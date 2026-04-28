@@ -279,3 +279,23 @@
     background: #57a7fc;
     transform: scale(1.03);
 }
+
+.modal-brand-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.modal-wish-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #e55;
+    transition: transform 0.2s;
+    line-height: 1;
+}
+
+.modal-wish-btn:hover {
+    transform: scale(1.2);
+}

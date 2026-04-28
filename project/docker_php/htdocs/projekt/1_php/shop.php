@@ -56,7 +56,7 @@ $result = $conn->query($sql);
             </div>
         </div>
         <div class="right">
-            <a href="#" class="navlink">
+            <a href="wunschliste.php" class="navlink">
                 <div class="icon">
                     <img src="../images/wishlist.png" alt="Herz">
                     <span>Wunschliste</span>
@@ -77,7 +77,7 @@ $result = $conn->query($sql);
                     <a href="#">Meine Bestellungen</a>
                     <a href="#">Einstellungen</a>
                     <a href="#">Wunschliste</a>
-                    <a href="#" class="logout">Abmelden</a>
+                    <a href="1_php/logout.php" class="logout">Abmelden</a>
                     ' : '
                     <a href="login.php?login">Anmelden</a>
                     <a href="login.php?register">Registrieren</a>
@@ -146,7 +146,10 @@ $result = $conn->query($sql);
             </div>
 
             <div class="modal-right">
-                <h2 id="modalBrand"></h2>
+                <div class="modal-brand-row">
+                    <h2 id="modalBrand"></h2>
+                    <button class="modal-wish-btn" id="modalWishBtn" onclick="toggleWunschliste()">♡</button>
+                </div>
                 <p id="modalBeschreibung"></p>
                 <div class="modal-preis" id="modalPreis"></div>
 
@@ -186,7 +189,10 @@ $result = $conn->query($sql);
             });
         });
 
+        let currentProductId = null;
+
         function openModal(productId) {
+            currentProductId = productId;
             fetch('get_product.php?id=' + productId)
                 .then(res => res.json())
                 .then(data => {
@@ -226,8 +232,30 @@ $result = $conn->query($sql);
                     }
 
                     document.getElementById('modalOverlay').classList.add('show');
+
+                    // Wunschliste Status setzen
+                    fetch('wunschliste_check.php?product_id=' + productId)
+                        .then(r => r.json())
+                        .then(d => {
+                            document.getElementById('modalWishBtn').textContent = d.inWunschliste ? '♥' : '♡';
+                        });
+
+                    document.getElementById('modalOverlay').classList.add('show');
+       
                 });
         }
+        function toggleWunschliste() {
+            if (!currentProductId) return;
+            fetch('wunschliste_toggle.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'product_id=' + currentProductId
+            })
+            .then(r => r.json())
+            .then(d => {
+                document.getElementById('modalWishBtn').textContent = d.inWunschliste ? '♥' : '♡';
+        });
+}
 
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('show');

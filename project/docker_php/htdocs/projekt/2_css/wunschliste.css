@@ -1,0 +1,105 @@
+body {
+    overflow: hidden;
+}
+
+.wishlist-page {
+    padding: 2rem 5%;
+    background: url("../images/backgrounds/skatewall1.png") center/cover no-repeat fixed;
+    min-height: 100vh;
+}
+
+.wishlist-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.empty-msg {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* GRID */
+.wishlist-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* CARD */
+.wishlist-card {
+    background: var(--lightgrey);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.wishlist-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    background: var(--grey);
+    border-radius: 8px;
+}
+
+.wishlist-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.wishlist-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.wishlist-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.wishlist-info span {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* BUTTONS */
+.wishlist-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.btn-cart {
+    background: var(--basicBlue);
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.btn-cart:hover {
+    background: #57a7fc;
+}
+
+.btn-remove {
+    background: transparent;
+    border: 2px solid #e55;
+    border-radius: 20px;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #e55;
+    transition: 0.2s;
+}
+
+.btn-remove:hover {
+    background: #e55;
+    color: white;
+}

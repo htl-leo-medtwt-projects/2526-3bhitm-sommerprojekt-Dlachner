@@ -29,7 +29,7 @@ session_start();
             </div>
             
             <div class="right">
-                <a href="#" class="navlink">
+                <a href="1_php/wunschliste.php" class="navlink">
                     <div class="icon">
                         <img src="images/wishlist.png" alt="Herz">
                         <span>Wunschliste</span>
@@ -53,7 +53,7 @@ session_start();
                         <a href="#">Meine Bestellungen</a>
                         <a href="#">Einstellungen</a>
                         <a href="#">Wunschliste</a>
-                        <a href="#" class="logout">Abmelden</a>
+                        <a href="1_php/logout.php" class="logout">Abmelden</a>
                         ' : '
                         <a href="1_php/login.php?login">Anmelden</a>
                         <a href="1_php/login.php?register">Registrieren</a>
