@@ -1,5 +1,6 @@
 <?php
-// Dieser Code wurde mit Unterstützung von ClaudeAI umgesetzt
+// ------ Dieser Code wurde mit Unterstützung von ClaudeAI umgesetzt ------
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -30,6 +31,7 @@ if ($category === 'accessoire') {
 $sql .= " ORDER BY p.product_id ASC";
 $result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,21 +119,43 @@ $result = $conn->query($sql);
     <!-- PRODUKTE -->
     <section class="shop">
         <div class="product-grid">
-
             <?php while ($produkt = $result->fetch_assoc()): ?>
-            <div class="product-card">
+            <div class="product-card" onclick="openModal(<?= $produkt['product_id'] ?>)">
                 <img src="../<?= htmlspecialchars($produkt['bildpfad']) ?>" 
                      alt="<?= htmlspecialchars($produkt['beschreibung']) ?>">
                 <div class="product-info">
-                    <h3><?= htmlspecialchars($produkt['brand']) ?></h3>
+                    <h3><?= htmlspecialchars(str_replace('_', ' ', $produkt['brand'])) ?></h3>
                     <p><?= htmlspecialchars($produkt['beschreibung']) ?></p>
                     <span>€ <?= number_format($produkt['preis'], 2, ',', '.') ?></span>
                 </div>
             </div>
             <?php endwhile; ?>
-
         </div>
     </section>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+
+            <div class="modal-left">
+                <div class="modal-img-wrapper">
+                    <img id="modalMainImg" src="" alt="">
+                </div>
+                <div class="modal-thumbnails" id="modalThumbnails"></div>
+            </div>
+
+            <div class="modal-right">
+                <h2 id="modalBrand"></h2>
+                <p id="modalBeschreibung"></p>
+                <div class="modal-preis" id="modalPreis"></div>
+
+                <div class="modal-info" id="modalInfo"></div>
+
+                <button class="modal-cart-btn">In den Warenkorb</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -160,6 +184,58 @@ $result = $conn->query($sql);
                     categoryDropdown.classList.remove("show");
                 }
             });
+        });
+
+        function openModal(productId) {
+            fetch('get_product.php?id=' + productId)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('modalBrand').textContent = data.brand;
+                    document.getElementById('modalBeschreibung').textContent = data.beschreibung;
+                    document.getElementById('modalPreis').textContent = '€ ' + data.preis;
+
+                    // Bilder
+                    const mainImg = document.getElementById('modalMainImg');
+                    const thumbs = document.getElementById('modalThumbnails');
+                    mainImg.src = '../' + data.bilder[0].bildpfad;
+                    thumbs.innerHTML = '';
+
+                    if (data.bilder.length > 1) {
+                        data.bilder.forEach((bild, i) => {
+                            const img = document.createElement('img');
+                            img.src = '../' + bild.bildpfad;
+                            img.classList.toggle('active', i === 0);
+                            img.onclick = () => {
+                                mainImg.src = '../' + bild.bildpfad;
+                                thumbs.querySelectorAll('img').forEach(t => t.classList.remove('active'));
+                                img.classList.add('active');
+                            };
+                            thumbs.appendChild(img);
+                        });
+                    }
+
+                    // Eigenschaften
+                    const infoDiv = document.getElementById('modalInfo');
+                    infoDiv.innerHTML = '<h4>Info</h4>';
+                    for (const [key, val] of Object.entries(data.eigenschaften)) {
+                        infoDiv.innerHTML += `
+                            <div class="modal-info-row">
+                                <span class="modal-info-label">${key}</span>
+                                <span class="modal-info-value">${val}</span>
+                            </div>`;
+                    }
+
+                    document.getElementById('modalOverlay').classList.add('show');
+                });
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        // ESC zum Schließen
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeModal();
         });
     </script>
 </body>

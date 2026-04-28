@@ -141,3 +141,141 @@
     background: var(--basicBlue);
     color: white;
 }
+
+/* --- MODAL --- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--lightgrey);
+    border-radius: 12px;
+    width: 80%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    position: relative;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-img-wrapper img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    background: var(--grey);
+    border-radius: 8px;
+}
+
+.modal-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.modal-thumbnails img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    background: var(--grey);
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.modal-thumbnails img.active {
+    border-color: var(--basicBlue);
+}
+
+.modal-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-family: JetBrains_Mono;
+}
+
+.modal-right h2 {
+    font-size: 2rem;
+    font-family: var(--mainHeader);
+}
+
+.modal-right p {
+    color: #444;
+}
+
+.modal-preis {
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-family: JetBrains_Mono;
+}
+
+.modal-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-info-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.modal-info-label {
+    width: 100px;
+    color: #666;
+}
+
+.modal-info-value {
+    border: 2px solid var(--basicBlue);
+    border-radius: 20px;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+.modal-cart-btn {
+    margin-top: auto;
+    background: var(--basicBlue);
+    border: none;
+    border-radius: 25px;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    width: fit-content;
+    font-family: var(--mainHeader);
+    transition: 0.2s;
+}
+
+.modal-cart-btn:hover {
+    background: #57a7fc;
+    transform: scale(1.03);
+}
