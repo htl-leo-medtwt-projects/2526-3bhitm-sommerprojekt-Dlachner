@@ -62,7 +62,7 @@ $result = $conn->query($sql);
                     <span>Wunschliste</span>
                 </div>
             </a>
-            <a href="#" class="navlink">
+            <a href="warenkorb.php" class="navlink">
                 <div class="icon">
                     <img src="../images/warenkorb.png" alt="Warenkorb">
                     <span>Warenkorb</span>
@@ -155,7 +155,7 @@ $result = $conn->query($sql);
 
                 <div class="modal-info" id="modalInfo"></div>
 
-                <button class="modal-cart-btn">In den Warenkorb</button>
+                <button class="modal-cart-btn" onclick="addToWarenkorb()">In den Warenkorb</button>
             </div>
         </div>
     </div>
@@ -265,6 +265,25 @@ $result = $conn->query($sql);
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeModal();
         });
+
+
+        function addToWarenkorb() {
+            if (!currentProductId) return;
+            fetch('warenkorb_add.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'product_id=' + currentProductId
+            })
+            .then(() => {
+                const btn = document.querySelector('.modal-cart-btn');
+                btn.textContent = '✓ Hinzugefügt';
+                btn.style.background = '#4CAF50';
+                setTimeout(() => {
+                    btn.textContent = 'In den Warenkorb';
+                    btn.style.background = '';
+                }, 1500);
+            });
+        }
     </script>
 </body>
 </html>
