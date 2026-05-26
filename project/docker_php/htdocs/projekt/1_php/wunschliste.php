@@ -83,36 +83,38 @@ $result = $conn->query("
 
     <section class="wishlist-page">
         <h1>Meine Wunschliste</h1>
-
-        <div class="wishlist-grid">
-            <?php
-            $produkte = $result->fetch_all(MYSQLI_ASSOC);
-            if (count($produkte) === 0): ?>
-                <p class="empty-msg">Deine Wunschliste ist noch leer.</p>
-            <?php else: ?>
-                <?php foreach ($produkte as $p): ?>
-                <div class="wishlist-card">
-                    <img src="../<?= htmlspecialchars($p['bildpfad']) ?>"
-                         alt="<?= htmlspecialchars($p['beschreibung']) ?>">
-                    <div class="wishlist-info">
-                        <h3><?= htmlspecialchars(str_replace('_', ' ', $p['brand'])) ?></h3>
-                        <p><?= htmlspecialchars($p['beschreibung']) ?></p>
-                        <span>€ <?= number_format($p['preis'], 2, ',', '.') ?></span>
+        <div class="wishlist-box">
+            <div class="wishlist-grid">
+                <?php
+                $produkte = $result->fetch_all(MYSQLI_ASSOC);
+                if (count($produkte) === 0): ?>
+                    <p class="empty-msg">Deine Wunschliste ist noch leer.</p>
+                <?php else: ?>
+                    <?php foreach ($produkte as $p): ?>
+                    <div class="wishlist-card">
+                        <img src="../<?= htmlspecialchars($p['bildpfad']) ?>"
+                            alt="<?= htmlspecialchars($p['beschreibung']) ?>">
+                        <div class="wishlist-info">
+                            <h3><?= htmlspecialchars(str_replace('_', ' ', $p['brand'])) ?></h3>
+                            <p><?= htmlspecialchars($p['beschreibung']) ?></p>
+                            <span>€ <?= number_format($p['preis'], 2, ',', '.') ?></span>
+                        </div>
+                        <div class="wishlist-actions">
+                            <form method="POST" action="warenkorb_add.php">
+                                <input type="hidden" name="product_id" value="<?= $p['product_id'] ?>">
+                                <button type="submit" class="btn-cart">In den Warenkorb</button>
+                            </form>
+                            <form method="POST">
+                                <input type="hidden" name="product_id" value="<?= $p['product_id'] ?>">
+                                <button type="submit" name="remove" class="btn-remove">✕ Entfernen</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="wishlist-actions">
-                        <form method="POST" action="warenkorb_add.php">
-                            <input type="hidden" name="product_id" value="<?= $p['product_id'] ?>">
-                            <button type="submit" class="btn-cart">In den Warenkorb</button>
-                        </form>
-                        <form method="POST">
-                            <input type="hidden" name="product_id" value="<?= $p['product_id'] ?>">
-                            <button type="submit" name="remove" class="btn-remove">✕ Entfernen</button>
-                        </form>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
         </div>
+        
     </section>
 
     <script>
