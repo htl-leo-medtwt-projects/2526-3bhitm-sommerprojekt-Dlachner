@@ -52,7 +52,7 @@ $result = $conn->query($sql);
             </div>
             <div class="nav-links">
                 <a href="shop.php">Zum Shop</a>
-                <a href="#">Zum Konfigurator</a>
+                <a href="konfigurator.php">Zum Konfigurator</a>
             </div>
         </div>
         <div class="right">
@@ -75,7 +75,6 @@ $result = $conn->query($sql);
                 <div class="profile-dropdown" id="profileDropdown">
                     ' . ($isLoggedIn ? '
                     <a href="#">Meine Bestellungen</a>
-                    <a href="#">Einstellungen</a>
                     <a href="#">Wunschliste</a>
                     <a href="1_php/logout.php" class="logout">Abmelden</a>
                     ' : '

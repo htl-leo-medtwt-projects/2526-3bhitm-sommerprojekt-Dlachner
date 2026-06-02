@@ -1,7 +1,3 @@
-body {
-    overflow: hidden;
-}
-
 .cart-page {
     padding: 2rem 5%;
     background: url("../images/backgrounds/skatewall1.png") center/cover no-repeat fixed;
@@ -25,6 +21,8 @@ body {
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
 /* GRID */
@@ -161,6 +159,8 @@ body {
     font-size: 1rem;
     cursor: pointer;
     transition: 0.2s;
+    text-decoration: none;
+    color:black;
 }
 
 .btn-bestellen:hover {

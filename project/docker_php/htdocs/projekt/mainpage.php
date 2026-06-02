@@ -24,7 +24,7 @@ session_start();
 
                 <div class="nav-links">
                     <a href="1_php/shop.php">Zum Shop</a>
-                    <a href="#">Zum Konfigurator</a>
+                    <a href="1_php/konfigurator.php">Zum Konfigurator</a>
                 </div>
             </div>
             
@@ -51,8 +51,7 @@ session_start();
                     <div class="profile-dropdown" id="profileDropdown">
                         ' . ($isLoggedIn ? '
                         <a href="#">Meine Bestellungen</a>
-                        <a href="#">Einstellungen</a>
-                        <a href="#">Wunschliste</a>
+                        <a href="1_php/wunschliste.php">Wunschliste</a>
                         <a href="1_php/logout.php" class="logout">Abmelden</a>
                         ' : '
                         <a href="1_php/login.php?login">Anmelden</a>
@@ -68,7 +67,7 @@ session_start();
         <section class="hero">
             <div class="hero-content">
                 <h1>Konfiguriere dein<br>Skateboard!</h1>
-                <a href="#" class="hero-button">Zum Konfigurator</a>
+                <a href="1_php/konfigurator.php" class="hero-button">Zum Konfigurator</a>
             </div>
         </section>
 

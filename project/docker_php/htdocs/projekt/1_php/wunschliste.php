@@ -50,7 +50,7 @@ $result = $conn->query("
             </div>
             <div class="nav-links">
                 <a href="shop.php">Zum Shop</a>
-                <a href="#">Zum Konfigurator</a>
+                <a href="konfigurator.php">Zum Konfigurator</a>
             </div>
         </div>
         <div class="right">
@@ -72,7 +72,6 @@ $result = $conn->query("
                 </a>
                 <div class="profile-dropdown" id="profileDropdown">
                     <a href="#">Meine Bestellungen</a>
-                    <a href="#">Einstellungen</a>
                     <a href="wunschliste.php">Wunschliste</a>
                     <a href="logout.php" class="logout">Abmelden</a>
                 </div>
