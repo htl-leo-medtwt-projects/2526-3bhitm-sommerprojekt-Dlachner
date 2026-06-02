@@ -127,7 +127,6 @@ elseif ($step === 5) $isSelected = true; // Accessoires optional
     <section class="konfigurator-page">
         <div class="konfigurator-container">
 
-            <!-- Oben: Schritt Überschrift + Fortschritt Bilder -->
             <div class="konfigurator-header">
                 <div class="konfigurator-titel">
                     <h1>Schritt <?= $step ?></h1>

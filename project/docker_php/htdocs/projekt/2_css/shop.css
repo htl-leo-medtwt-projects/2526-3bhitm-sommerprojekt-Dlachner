@@ -101,6 +101,7 @@
 .product-info p {
     margin: 0.2rem 0;
     font-size: 0.8rem;
+    font-family: var(--links);
 }
 
 .product-info span {

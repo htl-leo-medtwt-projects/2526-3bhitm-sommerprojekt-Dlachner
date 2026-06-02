@@ -24,12 +24,14 @@
 .konfigurator-titel h1 {
     font-size: 2.5rem;
     margin: 0;
+    font-family: var(--mainHeader);
 }
 
 .konfigurator-titel p {
     margin: 0;
     font-size: 1.2rem;
     color: #555;
+    font-family: var(--links);
 }
 
 .konfigurator-progress {
@@ -99,6 +101,7 @@
 .produkt-info p {
     margin: 0.2rem 0;
     font-size: 0.8rem;
+    font-family: var(--links);
 }
 
 .produkt-info span {
