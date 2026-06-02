@@ -33,7 +33,6 @@ CREATE TABLE deck (
 
 CREATE TABLE griptape (
     product_id INT NOT NULL,
-    size INT NOT NULL,
     PRIMARY KEY (product_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
