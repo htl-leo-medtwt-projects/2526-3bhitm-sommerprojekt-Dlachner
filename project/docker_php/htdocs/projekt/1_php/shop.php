@@ -22,7 +22,7 @@ $sql = "
 ";
 
 if ($category === 'accessoire') {
-    $sql .= " WHERE p.kategorie IN ('accessoire', 'griptape')";
+    $sql .= " WHERE p.kategorie IN ('accessories', 'griptape')";
 } elseif ($category) {
     $category = $conn->real_escape_string($category);
     $sql .= " WHERE p.kategorie = '$category'";
