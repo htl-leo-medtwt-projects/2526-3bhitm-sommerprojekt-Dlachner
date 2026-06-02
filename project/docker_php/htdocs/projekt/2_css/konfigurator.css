@@ -30,8 +30,9 @@
 .konfigurator-titel p {
     margin: 0;
     font-size: 1.2rem;
-    color: #555;
+    color: black;
     font-family: var(--links);
+    text-decoration: underline;
 }
 
 .konfigurator-progress {

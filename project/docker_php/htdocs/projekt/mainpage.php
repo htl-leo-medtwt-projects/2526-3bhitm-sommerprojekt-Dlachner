@@ -35,7 +35,7 @@ session_start();
                         <span>Wunschliste</span>
                     </div>
                 </a>
-                <a href="#" class="navlink">
+                <a href="1_php/warenkorb.php" class="navlink">
                     <div class="icon">
                         <img src="images/warenkorb.png" alt="Warenkorb">
                         <span>Warenkorb</span>
