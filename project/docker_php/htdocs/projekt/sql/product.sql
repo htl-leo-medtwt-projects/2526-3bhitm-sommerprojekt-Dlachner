@@ -49,7 +49,7 @@ CREATE TABLE picture (
 
 CREATE TABLE trucks (
     product_id INT NOT NULL,
-    height DECIMAL(4,2) NOT NULL,
+    height VARCHAR(10) NOT NULL,
     width DECIMAL(4,2) NOT NULL,
     PRIMARY KEY (product_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
