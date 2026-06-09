@@ -12,7 +12,13 @@ $conn = new mysqli("db_server", "skate", "1234", "produkt_db");
 // Kategorie Filter
 $category = $_GET['category'] ?? null;
 if ($category) {
-    $category = trim($category); // <-- hier
+    $category = trim($category);
+}
+
+// Suche Parameter
+$search = $_GET['search'] ?? null;
+if ($search) {
+    $search = trim($search);
 }
 
 // Sort Parameter
@@ -27,13 +33,17 @@ $sql = "
         AND pic.ismain = '1'
 ";
 
+$whereAdded = false;
+
+// Kategorie Filter
 if ($category === 'accessoire') {
     $sql .= " WHERE p.kategorie IN ('accessories', 'griptape')";
+    $whereAdded = true;
 } elseif ($category) {
     $category = $conn->real_escape_string($category);
     $sql .= " WHERE p.kategorie = '$category'";
+    $whereAdded = true;
 }
-
 
 // Marke bekommen
 $brandFilter = $_GET['brand'] ?? null;
@@ -41,8 +51,8 @@ if ($brandFilter) {
     $brandFilter = trim($brandFilter);
 }
 
-    // Marken Query
-$brandSql = "SELECT DISTINCT brand FROM product";
+// Marken Query
+$brandSql = "SELECT DISTINCT TRIM(brand) as brand FROM product";
 
 if ($category === 'accessoire') {
     $brandSql .= " WHERE kategorie IN ('accessories', 'griptape')";
@@ -51,13 +61,36 @@ if ($category === 'accessoire') {
     $brandSql .= " WHERE kategorie = '$categoryEscaped'";
 }
 
+// Suche zur Marken Query hinzufügen
+if ($search) {
+    $searchEscaped = $conn->real_escape_string($search);
+    if (strpos($brandSql, 'WHERE') !== false) {
+        $brandSql .= " AND (brand LIKE '%$searchEscaped%' OR product_id IN (SELECT product_id FROM product WHERE beschreibung LIKE '%$searchEscaped%'))";
+    } else {
+        $brandSql .= " WHERE (brand LIKE '%$searchEscaped%' OR product_id IN (SELECT product_id FROM product WHERE beschreibung LIKE '%$searchEscaped%'))";
+    }
+}
+
+// Brand Filter zur Hauptquery
 if ($brandFilter) {
     $brandEscaped = $conn->real_escape_string($brandFilter);
 
-    if (strpos($sql, 'WHERE') !== false) {
-        $sql .= " AND p.brand = '$brandEscaped'";
+    if ($whereAdded) {
+        $sql .= " AND TRIM(p.brand) = '$brandEscaped'";
     } else {
-        $sql .= " WHERE p.brand = '$brandEscaped'";
+        $sql .= " WHERE TRIM(p.brand) = '$brandEscaped'";
+        $whereAdded = true;
+    }
+}
+
+// Suche zur Hauptquery
+if ($search) {
+    $searchEscaped = $conn->real_escape_string($search);
+    
+    if ($whereAdded) {
+        $sql .= " AND (p.beschreibung LIKE '%$searchEscaped%' OR p.brand LIKE '%$searchEscaped%')";
+    } else {
+        $sql .= " WHERE (p.beschreibung LIKE '%$searchEscaped%' OR p.brand LIKE '%$searchEscaped%')";
     }
 }
 
@@ -135,10 +168,24 @@ $result = $conn->query($sql);
     <section class="shop-header">
         <h1>Shop</h1>
         <div class="shop-controls">
-            <div class="search">
-                <input type="text" placeholder="Suche">
-                <img src="../images/search.png" alt="Suche">
-            </div>
+            <form id="searchForm" method="GET" action="shop.php" style="display: flex; align-items: center; gap: 10px;">
+                <div class="search">
+                    <input type="text" id="searchInput" name="search" placeholder="Suche" value="<?= htmlspecialchars($search ?? '') ?>">
+                    <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0;">
+                        <img src="../images/search.png" alt="Suche">
+                    </button>
+                </div>
+                <!-- Hidden Inputs für andere Filter -->
+                <?php if ($category): ?>
+                    <input type="hidden" name="category" value="<?= htmlspecialchars($category) ?>">
+                <?php endif; ?>
+                <?php if ($brandFilter): ?>
+                    <input type="hidden" name="brand" value="<?= htmlspecialchars($brandFilter) ?>">
+                <?php endif; ?>
+                <?php if ($sort !== 'default'): ?>
+                    <input type="hidden" name="sort" value="<?= htmlspecialchars($sort) ?>">
+                <?php endif; ?>
+            </form>
         </div>
 
         <div class="filter-wrapper">
@@ -147,12 +194,18 @@ $result = $conn->query($sql);
 
                 <!-- Alle -->
                 <a href="shop.php<?php 
-                    if ($category) echo '?category=' . $category; 
+                    $params = [];
+                    if ($category) $params[] = 'category=' . $category;
+                    if ($search) $params[] = 'search=' . urlencode($search);
+                    if (!empty($params)) echo '?' . implode('&', $params);
                 ?>">Alle</a>
 
                 <?php while ($row = $brandResult->fetch_assoc()): ?>
                     <a href="shop.php?brand=<?= urlencode(trim($row['brand'])) ?>
-                        <?php if ($category) echo '&category=' . urlencode($category); ?>">
+                        <?php 
+                        if ($category) echo '&category=' . urlencode($category); 
+                        if ($search) echo '&search=' . urlencode($search);
+                        ?>">
                         <?= htmlspecialchars(trim($row['brand'])) ?>
                     </a>
                 <?php endwhile; ?>
@@ -164,12 +217,12 @@ $result = $conn->query($sql);
             <div class="filter-wrapper">
                 <button class="filter-btn" id="categoryBtn">Kategorie ▼</button>
                 <div class="filter-dropdown" id="categoryDropdown">
-                    <a href="shop.php">Alle</a>
-                    <a href="shop.php?category=deck">Deck</a>
-                    <a href="shop.php?category=trucks">Trucks</a>
-                    <a href="shop.php?category=wheels">Wheels</a>
-                    <a href="shop.php?category=bearings">Bearings</a>
-                    <a href="shop.php?category=accessoire">Accessoire</a>
+                    <a href="shop.php<?php if ($search) echo '?search=' . urlencode($search); ?>">Alle</a>
+                    <a href="shop.php?category=deck<?php if ($search) echo '&search=' . urlencode($search); ?>">Deck</a>
+                    <a href="shop.php?category=trucks<?php if ($search) echo '&search=' . urlencode($search); ?>">Trucks</a>
+                    <a href="shop.php?category=wheels<?php if ($search) echo '&search=' . urlencode($search); ?>">Wheels</a>
+                    <a href="shop.php?category=bearings<?php if ($search) echo '&search=' . urlencode($search); ?>">Bearings</a>
+                    <a href="shop.php?category=accessoire<?php if ($search) echo '&search=' . urlencode($search); ?>">Accessoire</a>
                 </div>
             </div>
         </div>
@@ -179,9 +232,20 @@ $result = $conn->query($sql);
             <div class="filter-wrapper">
                 <button class="filter-btn" id="sortBtn">Sortieren ▼</button>
                 <div class="filter-dropdown" id="sortDropdown">
-                    <a href="shop.php<?php if ($category) echo '?category=' . $category; ?>">Standard</a>
-                    <a href="shop.php?sort=preis_asc<?php if ($category) echo '&category=' . $category; ?>">Preis ↑</a>
-                    <a href="shop.php?sort=preis_desc<?php if ($category) echo '&category=' . $category; ?>">Preis ↓</a>
+                    <a href="shop.php<?php 
+                        $params = [];
+                        if ($category) $params[] = 'category=' . urlencode($category);
+                        if ($search) $params[] = 'search=' . urlencode($search);
+                        if (!empty($params)) echo '?' . implode('&', $params);
+                    ?>">Standard</a>
+                    <a href="shop.php?sort=preis_asc<?php 
+                        if ($category) echo '&category=' . urlencode($category);
+                        if ($search) echo '&search=' . urlencode($search);
+                    ?>">Preis ↑</a>
+                    <a href="shop.php?sort=preis_desc<?php 
+                        if ($category) echo '&category=' . urlencode($category);
+                        if ($search) echo '&search=' . urlencode($search);
+                    ?>">Preis ↓</a>
                 </div>
             </div>
         </div>
