@@ -150,8 +150,7 @@ $result = $conn->query($sql);
                 </a>
                 <div class="profile-dropdown" id="profileDropdown">
                     ' . ($isLoggedIn ? '
-                    <a href="einstellungen.php">Einstellungen</a>
-                    <a href="#">Meine Bestellungen</a>
+                    <a href="meineBestellungen.php">Meine Bestellungen</a>
                     <a href="wunschliste.php">Wunschliste</a>
                     <a href="logout.php" class="logout">Abmelden</a>
                     ' : '

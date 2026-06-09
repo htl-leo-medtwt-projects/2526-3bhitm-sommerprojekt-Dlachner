@@ -50,7 +50,7 @@ session_start();
                     <!-- Dropdown Menü (Von Grok AI) -->
                     <div class="profile-dropdown" id="profileDropdown">
                         ' . ($isLoggedIn ? '
-                        <a href="#">Meine Bestellungen</a>
+                        <a href="1_php/meineBestellungen.php">Meine Bestellungen</a>
                         <a href="1_php/wunschliste.php">Wunschliste</a>
                         <a href="1_php/logout.php" class="logout">Abmelden</a>
                         ' : '

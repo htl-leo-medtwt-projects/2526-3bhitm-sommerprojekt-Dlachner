@@ -88,7 +88,7 @@ foreach ($produkte as $p) {
                     <img src="../images/profilpic.png" alt="Profil">
                 </a>
                 <div class="profile-dropdown" id="profileDropdown">
-                    <a href="#">Meine Bestellungen</a>
+                    <a href="meineBestellungen.php">Meine Bestellungen</a>
                     <a href="wunschliste.php">Wunschliste</a>
                     <a href="logout.php" class="logout">Abmelden</a>
                 </div>
