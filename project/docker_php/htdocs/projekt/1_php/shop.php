@@ -11,6 +11,12 @@ $conn = new mysqli("db_server", "skate", "1234", "produkt_db");
 
 // Kategorie Filter
 $category = $_GET['category'] ?? null;
+if ($category) {
+    $category = trim($category); // <-- hier
+}
+
+// Sort Parameter
+$sort = $_GET['sort'] ?? 'default';
 
 $sql = "
     SELECT p.product_id, p.beschreibung, p.preis, p.brand, p.kategorie,
@@ -28,7 +34,44 @@ if ($category === 'accessoire') {
     $sql .= " WHERE p.kategorie = '$category'";
 }
 
-$sql .= " ORDER BY p.product_id ASC";
+
+// Marke bekommen
+$brandFilter = $_GET['brand'] ?? null;
+if ($brandFilter) {
+    $brandFilter = trim($brandFilter);
+}
+
+    // Marken Query
+$brandSql = "SELECT DISTINCT brand FROM product";
+
+if ($category === 'accessoire') {
+    $brandSql .= " WHERE kategorie IN ('accessories', 'griptape')";
+} elseif ($category) {
+    $categoryEscaped = $conn->real_escape_string($category);
+    $brandSql .= " WHERE kategorie = '$categoryEscaped'";
+}
+
+if ($brandFilter) {
+    $brandEscaped = $conn->real_escape_string($brandFilter);
+
+    if (strpos($sql, 'WHERE') !== false) {
+        $sql .= " AND p.brand = '$brandEscaped'";
+    } else {
+        $sql .= " WHERE p.brand = '$brandEscaped'";
+    }
+}
+
+$brandResult = $conn->query($brandSql);
+
+// Sortierung
+if ($sort === 'preis_asc') {
+    $sql .= " ORDER BY p.preis ASC";
+} elseif ($sort === 'preis_desc') {
+    $sql .= " ORDER BY p.preis DESC";
+} else {
+    $sql .= " ORDER BY p.product_id ASC";
+}
+
 $result = $conn->query($sql);
 ?>
 
@@ -74,9 +117,10 @@ $result = $conn->query($sql);
                 </a>
                 <div class="profile-dropdown" id="profileDropdown">
                     ' . ($isLoggedIn ? '
+                    <a href="einstellungen.php">Einstellungen</a>
                     <a href="#">Meine Bestellungen</a>
-                    <a href="#">Wunschliste</a>
-                    <a href="1_php/logout.php" class="logout">Abmelden</a>
+                    <a href="wunschliste.php">Wunschliste</a>
+                    <a href="logout.php" class="logout">Abmelden</a>
                     ' : '
                     <a href="login.php?login">Anmelden</a>
                     <a href="login.php?register">Registrieren</a>
@@ -95,10 +139,26 @@ $result = $conn->query($sql);
                 <input type="text" placeholder="Suche">
                 <img src="../images/search.png" alt="Suche">
             </div>
-            <button class="filter-btn">Filter ▼</button>
-            <button class="filter-btn">Marke ▼</button>
         </div>
 
+        <div class="filter-wrapper">
+            <button class="filter-btn" id="brandBtn">Marke ▼</button>
+            <div class="filter-dropdown" id="brandDropdown">
+
+                <!-- Alle -->
+                <a href="shop.php<?php 
+                    if ($category) echo '?category=' . $category; 
+                ?>">Alle</a>
+
+                <?php while ($row = $brandResult->fetch_assoc()): ?>
+                    <a href="shop.php?brand=<?= urlencode(trim($row['brand'])) ?>
+                        <?php if ($category) echo '&category=' . urlencode($category); ?>">
+                        <?= htmlspecialchars(trim($row['brand'])) ?>
+                    </a>
+                <?php endwhile; ?>
+
+            </div>
+        </div>
         <!-- Kategorie Dropdown -->
         <div class="category-btn">
             <div class="filter-wrapper">
@@ -110,6 +170,18 @@ $result = $conn->query($sql);
                     <a href="shop.php?category=wheels">Wheels</a>
                     <a href="shop.php?category=bearings">Bearings</a>
                     <a href="shop.php?category=accessoire">Accessoire</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sort Dropdown -->
+        <div class="category-btn">
+            <div class="filter-wrapper">
+                <button class="filter-btn" id="sortBtn">Sortieren ▼</button>
+                <div class="filter-dropdown" id="sortDropdown">
+                    <a href="shop.php<?php if ($category) echo '?category=' . $category; ?>">Standard</a>
+                    <a href="shop.php?sort=preis_asc<?php if ($category) echo '&category=' . $category; ?>">Preis ↑</a>
+                    <a href="shop.php?sort=preis_desc<?php if ($category) echo '&category=' . $category; ?>">Preis ↓</a>
                 </div>
             </div>
         </div>
@@ -186,6 +258,19 @@ $result = $conn->query($sql);
                     categoryDropdown.classList.remove("show");
                 }
             });
+
+            // Sort Dropdown
+            const sortBtn = document.getElementById("sortBtn");
+            const sortDropdown = document.getElementById("sortDropdown");
+            sortBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                sortDropdown.classList.toggle("show");
+            });
+            document.addEventListener("click", function(e) {
+                if (!sortBtn.contains(e.target)) {
+                    sortDropdown.classList.remove("show");
+                }
+            });
         });
 
         let currentProductId = null;
@@ -238,8 +323,6 @@ $result = $conn->query($sql);
                         .then(d => {
                             document.getElementById('modalWishBtn').textContent = d.inWunschliste ? '♥' : '♡';
                         });
-
-                    document.getElementById('modalOverlay').classList.add('show');
        
                 });
         }
@@ -253,8 +336,22 @@ $result = $conn->query($sql);
             .then(r => r.json())
             .then(d => {
                 document.getElementById('modalWishBtn').textContent = d.inWunschliste ? '♥' : '♡';
+            });
+        }
+
+        const brandBtn = document.getElementById("brandBtn");
+        const brandDropdown = document.getElementById("brandDropdown");
+
+        brandBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            brandDropdown.classList.toggle("show");
         });
-}
+
+        document.addEventListener("click", function(e) {
+            if (!brandBtn.contains(e.target)) {
+                brandDropdown.classList.remove("show");
+            }
+        });
 
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('show');
@@ -264,7 +361,6 @@ $result = $conn->query($sql);
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeModal();
         });
-
 
         function addToWarenkorb() {
             if (!currentProductId) return;
