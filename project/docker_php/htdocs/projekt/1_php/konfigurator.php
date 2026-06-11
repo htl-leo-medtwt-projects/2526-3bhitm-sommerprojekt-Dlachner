@@ -10,11 +10,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $conn = new mysqli("db_server", "skate", "1234", "produkt_db");
 $step = isset($_GET['step']) ? intval($_GET['step']) : 1;
-if ($step < 1 || $step > 5) $step = 1;
+if ($step < 1 || $step > 6) $step = 1;
 
 // Session für Konfiguration
 if (!isset($_SESSION['config'])) {
-    $_SESSION['config'] = ['deck' => null, 'griptape' => null, 'trucks' => null, 'wheels' => null, 'accessories' => []];
+    $_SESSION['config'] = ['deck' => null, 'griptape' => null, 'trucks' => null, 'wheels' => null, 'bearings' => null, 'accessories' => []];
 }
 
 // Produkte je nach Schritt laden
@@ -28,6 +28,8 @@ if ($step === 1) {
 } elseif ($step === 4) {
     $res = $conn->query("SELECT p.product_id, p.beschreibung, p.preis, p.brand, pic.bildpfad FROM product p LEFT JOIN picture pic ON pic.product_product_id = p.product_id AND pic.ismain = '1' WHERE p.kategorie = 'wheels'");
 } elseif ($step === 5) {
+    $res = $conn->query("SELECT p.product_id, p.beschreibung, p.preis, p.brand, pic.bildpfad FROM product p LEFT JOIN picture pic ON pic.product_product_id = p.product_id AND pic.ismain = '1' WHERE p.kategorie = 'bearings'");
+} elseif ($step === 6) {
     $res = $conn->query("SELECT p.product_id, p.beschreibung, p.preis, p.brand, pic.bildpfad FROM product p LEFT JOIN picture pic ON pic.product_product_id = p.product_id AND pic.ismain = '1' WHERE p.kategorie = 'accessories'");
 }
 
@@ -42,7 +44,8 @@ if (isset($_POST['select'])) {
     elseif ($step === 2) $_SESSION['config']['griptape'] = $product_id;
     elseif ($step === 3) $_SESSION['config']['trucks'] = $product_id;
     elseif ($step === 4) $_SESSION['config']['wheels'] = $product_id;
-    elseif ($step === 5) $_SESSION['config']['accessories'][] = $product_id;
+    elseif ($step === 5) $_SESSION['config']['bearings'] = $product_id;
+    elseif ($step === 6) $_SESSION['config']['accessories'][] = $product_id;
 }
 
 // Gesamtpreis berechnen
@@ -72,7 +75,8 @@ if ($step === 1 && $_SESSION['config']['deck']) $isSelected = true;
 elseif ($step === 2 && $_SESSION['config']['griptape']) $isSelected = true;
 elseif ($step === 3 && $_SESSION['config']['trucks']) $isSelected = true;
 elseif ($step === 4 && $_SESSION['config']['wheels']) $isSelected = true;
-elseif ($step === 5) $isSelected = true; // Accessoires optional
+elseif ($step === 5 && $_SESSION['config']['bearings']) $isSelected = true;
+elseif ($step === 6) $isSelected = true; // Accessories optional
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -115,7 +119,8 @@ elseif ($step === 5) $isSelected = true; // Accessoires optional
                     <img src="../images/profilpic.png" alt="Profil">
                 </a>
                 <div class="profile-dropdown" id="profileDropdown">
-                    <a href="meineBestellungen.php">Meine Bestellungen</a>
+                    <a href="einstellungen.php">Einstellungen</a>
+                    <a href="#">Meine Bestellungen</a>
                     <a href="wunschliste.php">Wunschliste</a>
                     <a href="logout.php" class="logout">Abmelden</a>
                 </div>
@@ -133,10 +138,12 @@ elseif ($step === 5) $isSelected = true; // Accessoires optional
                     <p id="stepName"></p>
                 </div>
 
+                <?php if ($step <= 4): ?>
                 <div class="konfigurator-progress">
                     <img src="../images/conf/skateboardconf_<?= $step ?>.png" alt="Progress">
                     <img src="../images/conf/skateboardUntenConf_<?= $step ?>.png" alt="Config">
                 </div>
+                <?php endif; ?>
             </div>
 
             <!-- Hauptinhalt: Produkte -->
@@ -158,7 +165,7 @@ elseif ($step === 5) $isSelected = true; // Accessoires optional
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Unten: Fortschritt Bild + Navigation + Preis -->
+                <!-- Unten: Navigation + Preis -->
                 <div class="konfigurator-footer">
 
                     <div class="konfigurator-footer-middle">
@@ -167,16 +174,16 @@ elseif ($step === 5) $isSelected = true; // Accessoires optional
                                 <a href="konfigurator.php?step=<?= $step - 1 ?>" class="btn-nav btn-zurück">← Zurück</a>
                             <?php endif; ?>
 
-                            <?php if ($step < 5): ?>
+                            <?php if ($step < 6): ?>
                                 <a href="konfigurator.php?step=<?= $step + 1 ?>" class="btn-nav btn-weiter" <?php if (!$isSelected) echo 'style="opacity: 0.5; pointer-events: none; cursor: not-allowed;"'; ?>>Weiter →</a>
-                            <?php elseif ($step === 5): ?>
+                            <?php elseif ($step === 6): ?>
                                 <form method="POST" action="konfigurator_fertig.php">
                                     <button type="submit" class="btn-nav btn-abschließen">Zum Warenkorb</button>
                                 </form>
                             <?php endif; ?>
                         </div>
 
-                        <?php if ($step === 5): ?>
+                        <?php if ($step === 6): ?>
                             <a href="konfigurator.php?step=1" class="btn-skip">Oder neustarten</a>
                         <?php endif; ?>
                     </div>
@@ -197,7 +204,8 @@ elseif ($step === 5) $isSelected = true; // Accessoires optional
             2: 'Griptape',
             3: 'Achsen',
             4: 'Reifen',
-            5: 'Deine Konfiguration'
+            5: 'Kugellager',
+            6: 'Zubehör'
         };
         document.getElementById('stepName').textContent = steps[<?= $step ?>];
 

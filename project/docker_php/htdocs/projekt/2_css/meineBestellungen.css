@@ -1,0 +1,153 @@
+.bestellungen-page {
+    padding: 2rem 5%;
+    min-height: calc(100vh - 70px);
+    background: url("../images/backgrounds/skatewall1.png") center/cover no-repeat fixed;
+}
+
+.bestellungen-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: var(--mainHeader);
+}
+
+.empty-msg {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* BOX */
+.bestellungen-box {
+    background: var(--grey);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* LIST */
+.bestellungen-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* CARD */
+.bestellung-card {
+    background: var(--lightgrey);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.bestellung-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid var(--grey);
+    background: var(--lightgrey);
+}
+
+.bestellung-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-family: var(--mainHeader);
+}
+
+.bestellung-info p {
+    margin: 0.2rem 0 0 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.bestellung-status {
+    text-align: right;
+}
+
+.status {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status.offen {
+    background: rgba(255, 180, 100, 0.8);
+    color: white;
+}
+
+.status.versandt {
+    background: rgba(100, 200, 255, 0.8);
+    color: white;
+}
+
+.status.delivered {
+    background: rgba(100, 200, 100, 0.8);
+    color: white;
+}
+
+.status.cancelled {
+    background: rgba(255, 100, 100, 0.8);
+    color: white;
+}
+
+/* DETAILS */
+.bestellung-details {
+    padding: 1rem 1.5rem;
+}
+
+.positions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.position-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    background: rgba(0,0,0,0.03);
+    border-radius: 8px;
+}
+
+.position-info {
+    flex: 1;
+}
+
+.position-brand {
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.position-desc {
+    margin: 0.2rem 0 0 0;
+    font-size: 0.85rem;
+    color: #666;
+    font-family: var(--links);
+}
+
+.position-menge {
+    min-width: 60px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.position-preis {
+    min-width: 100px;
+    text-align: right;
+    font-weight: bold;
+}
+
+/* FOOTER */
+.bestellung-footer {
+    padding: 1rem 1.5rem;
+    border-top: 2px solid var(--grey);
+    background: rgba(0,0,0,0.02);
+}
+
+.bestellung-total {
+    font-size: 1.1rem;
+    text-align: right;
+}
