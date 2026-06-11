@@ -62,3 +62,14 @@ CREATE TABLE wheels (
     PRIMARY KEY (product_id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
+
+CREATE TABLE bestellung_position (
+    position_id INT NOT NULL AUTO_INCREMENT,
+    bestellung_id INT NOT NULL,
+    product_id INT NOT NULL,
+    menge INT NOT NULL,
+    preis_damals DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (position_id),
+    FOREIGN KEY (bestellung_id) REFERENCES bestellung(bestellung_id),
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
